@@ -27,9 +27,11 @@ sudo -u cowrie python3 -m venv /opt/cowrie/cowrie-env
 sudo -u cowrie /opt/cowrie/cowrie-env/bin/pip install --upgrade pip setuptools wheel
 sudo -u cowrie /opt/cowrie/cowrie-env/bin/pip install -r /opt/cowrie/requirements.txt
 
-echo "[+] Creating symlink for bin/cowrie..."
+echo "[+] Creating symlink for /opt/cowrie/bin/cowrie..."
 sudo -u cowrie mkdir -p /opt/cowrie/bin
-sudo -u cowrie ln -sf /opt/cowrie/cowrie-env/bin/cowrie /opt/cowrie/bin/cowrie
+if [ ! -f /opt/cowrie/bin/cowrie ]; then
+    sudo -u cowrie ln -sf /opt/cowrie/cowrie-env/bin/cowrie /opt/cowrie/bin/cowrie
+fi
 
 echo "[+] Configuring Cowrie..."
 sudo -u cowrie cp -n /opt/cowrie/etc/cowrie.cfg.dist /opt/cowrie/etc/cowrie.cfg
