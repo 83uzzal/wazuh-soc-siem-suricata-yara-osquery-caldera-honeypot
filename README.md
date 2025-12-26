@@ -118,6 +118,17 @@ Runtime rules location:
 /var/lib/suricata/rules/
 
 
+⭐ Star the Repo
+
+If this project helps you, please ⭐ star the repository!
+
+📌 Disclaimer
+
+This lab is for education & defensive security research only.
+Do NOT deploy on production systems.
+
+
+
 👨‍💻 Author
 
 Md. Alamgir Hasan
