@@ -7,11 +7,24 @@
 
 set -Eeuo pipefail
 
-# --- Fix CRLF line endings for this script (GitHub copy) ---
+# ------------------------------------------------------------
+# Root check
+# ------------------------------------------------------------
+if [[ $EUID -ne 0 ]]; then
+  echo -e "\n[ERROR] Run as root: sudo ./install_all.sh"
+  exit 1
+fi
+
+# ------------------------------------------------------------
+# Fix CRLF line endings (GitHub copy) BEFORE any execution
+# ------------------------------------------------------------
 apt update -y
 apt install -y dos2unix
 dos2unix "$0"
 
+# ------------------------------------------------------------
+# Logging
+# ------------------------------------------------------------
 LOG_FILE="/var/log/soc_install.log"
 exec > >(tee -a "$LOG_FILE") 2>&1
 
@@ -26,11 +39,13 @@ fail() {
 
 trap 'fail "Installation failed at line $LINENO"' ERR
 
-# ------------------------------------------------------------
-# Root check
-# ------------------------------------------------------------
-if [[ $EUID -ne 0 ]]; then
-  fail "Run as root: sudo ./install_all.sh"
-fi
+log "Root check and CRLF fix completed. Ready to proceed."
 
-# ... rest of your script ...
+# ------------------------------------------------------------
+# Now you can call other installation functions:
+# install_wazuh
+# install_suricata
+# install_yara_clamav
+# install_osquery
+# install_cowrie
+# ------------------------------------------------------------
