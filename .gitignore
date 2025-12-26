@@ -1,0 +1,11 @@
+# Suricata runtime rules
+suricata/rules/*.rules
+suricata/rules/*.config
+
+# Logs
+*.log
+
+# Secrets
+*.key
+*.pem
+*.crt
