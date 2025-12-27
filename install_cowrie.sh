@@ -11,6 +11,13 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+# System auto-update & upgrade
+log "Updating and upgrading Ubuntu automatically"
+apt update -y
+apt upgrade -y
+apt autoremove -y
+log "System update & upgrade completed"
+
 # -------------------------------------------------
 # System update & dependencies
 # -------------------------------------------------
@@ -112,3 +119,4 @@ echo " SSH Honeypot Port : 2225"
 echo " Telnet Port      : 23"
 echo " Cowrie Path      : /opt/cowrie"
 echo "================================================="
+
