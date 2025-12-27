@@ -33,12 +33,19 @@ sudo ./install_all.sh
 ⚙️ What install_all.sh Does
 
 ✔ Installs Wazuh 4.14 (All-in-One)
+
 ✔ Installs & configures Suricata IDS
+
 ✔ Integrates Suricata → Wazuh (EVE JSON)
+
 ✔ Installs YARA + ClamAV
+
 ✔ Installs Osquery
+
 ✔ Deploys Cowrie SSH Honeypot
+
 ✔ Enables services & logging
+
 ✔ Prints Dashboard URL & credentials
 
 
