@@ -13,7 +13,8 @@ A complete blue-team SOC & SIEM home lab for threat detection, malware analysis,
 📂 Repository Structure
 
 
-<img width="655" height="322" alt="image" src="https://github.com/user-attachments/assets/2fdb5c47-651a-4797-a874-981b0b840774" />
+<img width="800" height="1200" alt="image" src="https://github.com/user-attachments/assets/f8eabb1a-fa80-4cab-b7e2-a50e210ed1b6" />
+
 
 
 
@@ -49,6 +50,7 @@ sudo ./install_all.sh
 ✔ Prints Dashboard URL & credentials
 
 
+
 🔎 Important Log Locations
 Wazuh
 
@@ -68,6 +70,7 @@ Cowrie
 Osquery
 
 /var/log/osquery/osqueryd.results.log
+
 
 
 🧪 Use Cases
