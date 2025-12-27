@@ -6,7 +6,7 @@ A complete blue-team SOC & SIEM home lab for threat detection, malware analysis,
 
 🏗️ Architecture Overview
 
-                  🌐 𝐈𝐧𝐭𝐞𝐫𝐧𝐞𝐭 / 𝐀𝐭𝐭𝐚𝐜𝐤𝐞𝐫
+                   🌐 𝐈𝐧𝐭𝐞𝐫𝐧𝐞𝐭 / 𝐀𝐭𝐭𝐚𝐜𝐤𝐞𝐫
                              │
                              ▼
    ┌─────────────────────────────────────┐
@@ -49,7 +49,6 @@ A complete blue-team SOC & SIEM home lab for threat detection, malware analysis,
    │  Real-time Alerts & Visualization   │
    │  Incident Monitoring & Analysis     │
    └─────────────────────────────────────┘
-
 
 
 
