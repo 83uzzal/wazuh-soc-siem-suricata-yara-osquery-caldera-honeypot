@@ -19,7 +19,9 @@ A complete blue-team SOC & SIEM home lab for threat detection, malware analysis,
 
 
 
+
 🚀 One-Command Installation
+
 ✅ Supported OS
 
 Ubuntu Server 22.04 / 24.04
