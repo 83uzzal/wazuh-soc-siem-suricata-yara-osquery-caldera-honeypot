@@ -5,25 +5,51 @@ Suricata | YARA | ClamAV | Osquery | Cowrie | MITRE CALDERA
 A complete blue-team SOC & SIEM home lab for threat detection, malware analysis, host monitoring, and attack simulation using open-source tools.
 
 🏗️ Architecture Overview
-[ Attacker / Internet ]
-          |
-      [ Suricata ]
-      Network IDS
-          |
-      [ Cowrie ]
-      SSH Honeypot
-          |
- [ YARA / ClamAV ]
-   Malware Scan
-          |
-     [ Osquery ]
-  Host Behavior
-          |
-   [ Wazuh Manager ]
-   SIEM + Correlation
-          |
-     [ Dashboard ]
-   Detection & Alerts
+
+                   🌐 Internet / Attacker
+                           │
+                           ▼
+        ┌─────────────────────────────────┐
+        │        🔍 Suricata IDS           │
+        │  Network Traffic Inspection     │
+        │  Signature & Anomaly Detection  │
+        └─────────────────────────────────┘
+                           │
+                           ▼
+        ┌─────────────────────────────────┐
+        │        🐍 Cowrie Honeypot        │
+        │  SSH / Telnet Attack Capture    │
+        │  Credential & Command Logging   │
+        └─────────────────────────────────┘
+                           │
+                           ▼
+        ┌─────────────────────────────────┐
+        │     🧬 YARA / ClamAV Engine      │
+        │  Malware Signature Scanning     │
+        │  Payload & File Analysis        │
+        └─────────────────────────────────┘
+                           │
+                           ▼
+        ┌─────────────────────────────────┐
+        │        📊 Osquery Agent          │
+        │  Host Behavior & System Events  │
+        │  Process, File & User Monitoring│
+        └─────────────────────────────────┘
+                           │
+                           ▼
+        ┌─────────────────────────────────┐
+        │        🧠 Wazuh Manager          │
+        │  SIEM, Log Correlation & Alerts │
+        │  Threat Detection & Compliance  │
+        └─────────────────────────────────┘
+                           │
+                           ▼
+        ┌─────────────────────────────────┐
+        │        📈 Security Dashboard     │
+        │  Real-time Alerts & Visualization│
+        │  Incident Monitoring & Analysis │
+        └─────────────────────────────────┘
+
 
 
 📂 Repository Structure
