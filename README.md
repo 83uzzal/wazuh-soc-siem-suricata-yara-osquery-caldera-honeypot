@@ -1,16 +1,20 @@
-🛡️ Wazuh SOC SIEM Lab
+# 🛡️ Wazuh SOC SIEM Lab
 
-Suricata | YARA | ClamAV | Osquery | Cowrie | MITRE CALDERA
+### Suricata | YARA | ClamAV | Osquery | Cowrie | MITRE CALDERA
 
 A complete blue-team SOC & SIEM home lab for threat detection, malware analysis, host monitoring, and attack simulation using open-source tools.
 
-🏗️ Architecture Overview
+-------------
+---
+
+
+### 🏗️ Architecture Overview
 
 <img width="915" height="1052" alt="image" src="https://github.com/user-attachments/assets/8b2a7f1d-156b-44fb-b246-63f37217ed64" />
 
 
 
-📂 Repository Structure
+### 📂 Repository Structure
 
 
 <img width="800" height="1200" alt="image" src="https://github.com/user-attachments/assets/f8eabb1a-fa80-4cab-b7e2-a50e210ed1b6" />
