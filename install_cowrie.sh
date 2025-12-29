@@ -1,73 +1,103 @@
 #!/bin/bash
 # ============================================================
-# Cowrie Honeypot Installer (FINAL / SYSTEMD SAFE)
-# Author: 83uzzal based workflow
+# Cowrie Honeypot Automated Installer (SYSTEMD SAFE)
+# - No PID issues
+# - No port binding issues
+# - Survives reboot
+# OS: Ubuntu 22.04 / 24.04
 # ============================================================
 
 set -Eeuo pipefail
 
 COWRIE_USER="cowrie"
-COWRIE_HOME="/home/$COWRIE_USER"
-COWRIE_DIR="$COWRIE_HOME/cowrie"
+COWRIE_HOME="/home/${COWRIE_USER}"
+COWRIE_DIR="${COWRIE_HOME}/cowrie"
+VENV_DIR="${COWRIE_DIR}/cowrie-env"
 
 echo "[+] Starting Cowrie installation..."
 
+# ------------------------------------------------------------
 # Root check
-[[ $EUID -eq 0 ]] || { echo "[ERROR] Run as root"; exit 1; }
+# ------------------------------------------------------------
+if [[ $EUID -ne 0 ]]; then
+  echo "[ERROR] Run as root: sudo ./install_cowrie.sh"
+  exit 1
+fi
 
-# Dependencies
-apt update -y
-apt install -y git curl python3 python3-venv python3-pip \
-               libssl-dev libffi-dev build-essential authbind
+# ------------------------------------------------------------
+# System update & dependencies
+# ------------------------------------------------------------
+apt update -y --fix-missing
+apt install -y \
+  git python3 python3-venv python3-pip \
+  libssl-dev libffi-dev build-essential \
+  libpython3-dev curl wget net-tools authbind
 
-# Create user
+# ------------------------------------------------------------
+# Create cowrie user
+# ------------------------------------------------------------
 if ! id cowrie &>/dev/null; then
-    adduser --disabled-password --gecos "" cowrie
+  adduser --disabled-password --gecos "" cowrie
 fi
 
-# Install Cowrie as cowrie user
-if [[ ! -d "$COWRIE_DIR" ]]; then
-    sudo -u cowrie bash <<EOF
-cd ~
-git clone https://github.com/cowrie/cowrie.git
-cd cowrie
-python3 -m venv cowrie-env
-source cowrie-env/bin/activate
-pip install --upgrade pip wheel setuptools
-pip install -r requirements.txt
-deactivate
-cp etc/cowrie.cfg.dist etc/cowrie.cfg
-EOF
+# ------------------------------------------------------------
+# Clone Cowrie (shallow clone)
+# ------------------------------------------------------------
+if [ ! -d "$COWRIE_DIR" ]; then
+  sudo -u cowrie git clone --depth 1 https://github.com/cowrie/cowrie.git "$COWRIE_DIR"
 fi
 
-# Authbind for telnet
-touch /etc/authbind/byport/23
-chown cowrie:cowrie /etc/authbind/byport/23
-chmod 500 /etc/authbind/byport/23
+# ------------------------------------------------------------
+# Python virtual environment
+# ------------------------------------------------------------
+sudo -u cowrie python3 -m venv "$VENV_DIR"
+sudo -u cowrie "$VENV_DIR/bin/pip" install --upgrade pip wheel setuptools
 
-# Systemd service
+# ------------------------------------------------------------
+# Install Cowrie
+# ------------------------------------------------------------
+sudo -u cowrie "$VENV_DIR/bin/pip" install -e "$COWRIE_DIR"
+
+# ------------------------------------------------------------
+# Cowrie configuration
+# ------------------------------------------------------------
+CFG="${COWRIE_DIR}/etc/cowrie.cfg"
+if [ ! -f "$CFG" ]; then
+  sudo -u cowrie cp "${COWRIE_DIR}/etc/cowrie.cfg.dist" "$CFG"
+fi
+
+# Enable Telnet honeypot
+sudo -u cowrie sed -i 's/^#enabled = false/enabled = true/' "$CFG"
+
+# ------------------------------------------------------------
+# Systemd service (CORRECT & SAFE)
+# ------------------------------------------------------------
 cat <<EOF >/etc/systemd/system/cowrie.service
 [Unit]
 Description=Cowrie SSH/Telnet Honeypot
 After=network.target
 
 [Service]
-Type=simple
+Type=forking
 User=cowrie
-Group=cowrie
-WorkingDirectory=$COWRIE_DIR
-Environment="PATH=$COWRIE_DIR/cowrie-env/bin:/usr/bin:/bin"
-ExecStart=$COWRIE_DIR/cowrie-env/bin/cowrie start -n
-Restart=always
-RestartSec=10
+WorkingDirectory=/home/cowrie/cowrie
+Environment="PATH=/home/cowrie/cowrie/cowrie-env/bin:/usr/bin:/bin"
+ExecStart=/home/cowrie/cowrie/cowrie-env/bin/cowrie start
+ExecStop=/home/cowrie/cowrie/cowrie-env/bin/cowrie stop
+PIDFile=/home/cowrie/cowrie/var/run/cowrie.pid
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
+# ------------------------------------------------------------
+# Enable & start Cowrie
+# ------------------------------------------------------------
+systemctl daemon-reexec
 systemctl daemon-reload
 systemctl enable cowrie
 systemctl restart cowrie
 
-echo "[+] Cowrie installed successfully"
+echo "[+] Cowrie installation complete"
 systemctl status cowrie --no-pager
