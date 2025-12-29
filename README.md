@@ -12,6 +12,7 @@ A complete blue-team SOC & SIEM home lab for threat detection, malware analysis,
 
 <img width="915" height="1052" alt="image" src="https://github.com/user-attachments/assets/8b2a7f1d-156b-44fb-b246-63f37217ed64" />
 
+---
 
 
 ### 📂 Repository Structure
@@ -24,11 +25,14 @@ A complete blue-team SOC & SIEM home lab for threat detection, malware analysis,
 
 
 
+---
 🚀 One-Command Installation
 
 ✅ Supported OS
 
 Ubuntu Server 22.04 / 24.04
+
+---
 
 🔹 Install everything
 
@@ -41,6 +45,7 @@ sudo chmod +x install_all.sh
 
 sudo ./install_all.sh
 
+---
 
 ⚙️ What install_all.sh Does
 
@@ -60,7 +65,7 @@ sudo ./install_all.sh
 
 ✔ Prints Dashboard URL & credentials
 
-
+---
 
 🔎 Important Log Locations
 Wazuh
@@ -82,7 +87,7 @@ Osquery
 
 /var/log/osquery/osqueryd.results.log
 
-
+---
 
 🧪 Use Cases
 
@@ -98,6 +103,7 @@ Osquery
 
 🎯 MITRE ATT&CK attack simulation (CALDERA ready)
 
+---
 
 🔄 Suricata Rules Handling (Security-Safe)
 
@@ -109,6 +115,7 @@ sudo suricata-update
 Runtime rules location:
 /var/lib/suricata/rules/
 
+---
 
 ⭐ Star the Repo
 
@@ -119,7 +126,8 @@ If this project helps you, please ⭐ star the repository!
 This lab is for education & defensive security research only.
 Do NOT deploy on production systems.
 
-
+---
+---
 
 👨‍💻 Author
 
