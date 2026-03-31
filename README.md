@@ -39,7 +39,7 @@ Ubuntu Server 22.04 / 24.04
 
 git clone https://github.com/83uzzal/wazuh-soc-security-lab.git
 
-cd wazuh-soc-siem-suricata-yara-osquery-caldera-honeypot
+cd wazuh-soc-security-lab
 
 sudo chmod +x install_all.sh
 
